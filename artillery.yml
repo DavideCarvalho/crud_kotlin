@@ -1,0 +1,21 @@
+config:
+  target: "http://localhost:8080"
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      rampTo: 50
+      name: "Warm up the application"
+    - duration: 120
+      arrivalRate: 50
+      rampTo: 100
+      name: "Sustained max load"
+  defaults:
+    headers:
+      content-type: 'application/json'
+scenarios:
+  - flow:
+    - post:
+        url: "/people"
+        json:
+          firstName: "Davi"
+          lastName: "de Carvalho"

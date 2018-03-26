@@ -6,11 +6,10 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import java.util.stream.Collector
 
 
 @RestController
-class PeopleEndpoint(val personRepository: PersonRepository) {
+class PeopleEndpoint(val personRepository: PersonRepository, var personId: Int = 1) {
 
 
     @GetMapping(value = ["/people"])
@@ -41,6 +40,8 @@ class PeopleEndpoint(val personRepository: PersonRepository) {
 
     @PostMapping(value = ["/people"])
     fun addPerson(@RequestBody person: Person): Mono<Person> {
+        person.id = this.personId.toString()
+        this.personId++
         return this.personRepository.save(person)
     }
 
